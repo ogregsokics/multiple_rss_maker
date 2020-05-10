@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>HÁZI RSS KÉPZŐ</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style>
+        .center {
+  margin: auto;
+  width: 100%;
+  
+  padding: 30px;
+  text-align: center;
+}
+
+
+
+</style>
+</head>
+
+<body>
+    <h1 class="center">multiplefilesRSS</h1>
+    <div class="row">
+        <div class="col-md-3">
+            <label>HardTalk esetén ki volt a vitapartner VAGY vessző, majd ki vett még rész a beszélgetésben ( pl: , Ellenpont András)</label>
+            <br>
+            <br>
+            <input type="text" class="form-control" id="description" value=""><br>
+            <br>
+            <!-- <label>dátum( pl: hhnn)</label>
+            <br>
+            <br>
+            <input type="text" class="form-control" id="datum" value=""><br> -->
+            <br>
+            <form name="formA">
+                <label><input type="radio" name="showName" value="ApuAzrtIszikMertTeSrsz"> APU</label> <br>
+                <label><input type="radio" name="showName" value="puzser_youtube_podcast">puzser_youtube_podcast</label><br>
+                <label><input type="radio" name="showName" value="NknyesMrvad2015-2019"> ÖNKÉNYES MÉRVADÓ </label><br>
+                <label><input type="radio" name="showName" value="HARDTALKPuzsrRberttel"> HARD TALK </label><br>
+                <label><input type="radio" name="showName" value="joarosszesanezhetetlen"> A jó, a rossz és a nézhetetlen </label><br>
+                <label><input type="radio" name="showName" value="sample%20webpage"> GOOGLE DRIVE (APU) </label><br>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group center">
+                <input type="file" class="btn btn-primary btn-lg" id="fileUploader" accept="audio/*" multiple />
+                <br>
+                <br>
+                <br>
+                <input type="button" class="btn btn-primary" id="btn" onclick="uploadFiles()" value="KATT IDE">
+            </div>
+            <br>
+            <br>
+            <textarea rows="4" cols="50" id="textareaRSS">textareaRSS</textarea>
+            <button onclick="copy0()">Copy textareaRSS</button>
+            <textarea rows="4" cols="50" id="textareaHTML">textareaHTML</textarea>
+            <button onclick="copy1()">Copy textareaHTML</button>
+            <textarea rows="4" cols="50" id="textareaYT">textareaYT</textarea>
+            <button onclick="copy2()">Copy textareaYT</button>
+        </div>
+        <div class="col-md-3">
+            <a id="link1" target="_blank">RSS</a><br><br>
+            <a id="link2" target="_blank">archive.org</a><br><br>
+            <a target="_blank" href="https://soundcloud.com/you/tracks">SoundCloud</a><br><br>
+            <a target="_blank" href="https://www.youtube.com/upload">youtube upload</a><br><br>
+            <a target="_blank" href="http://texteditor.nsspot.net/?state=%7B%22ids%22:%5B%221Fwup2j8at0Rw4h_uNsLthGG8Ns8gyuTg%22%5D,%22action%22:%22open%22,%22userId%22:%22103140051846511381616%22%7D">HTML DRIVE</a><br><br>
+            <a target="_blank" href="https://drive.google.com/drive/u/3/folders/1_T8eOktwjW53_yESnc9JCu8t7fBePo7K">GOOGLE DRIVE</a><br><br>
+        </div>
+    </div>
+    <script>
+    //  var id = new Date().getTime();
+
+    let rsslink;
+    let archivelink;
+    let showname;
+    let description;
+
+    let storepath;
+
+    //let year = new Date().getFullYear();
+
+
+
+
+    var a = document.getElementById('link1');
+    var b = document.getElementById('link2');
+
+    /* var event = new Date().toUTCString();
+     //alert(event);
+     var date2 = event.substring(0, event.length - 4);
+     //alert(date2);
+     var date3 = date2 + " +0200";*/
+
+    var d = new Date().getTime();
+
+
+
+    uploadFiles = () => {
+
+
+
+        var file = document.getElementById("fileUploader"); //All files
+
+
+        // let datum = (`${year}.${document.getElementById("datum").value.substring(0,2)}.${document.getElementById("datum").value.substring(2,4)}.`);
+
+        //console.log(file.files);
+        let uploadedfiles = [file.files];
+
+        let finishedFiles = [];
+        let szam = 0;
+
+        for (var i = 0; i < file.files.length; i++) {
+
+
+
+            var event = new Date(d - (i * 1000*60*60)).toUTCString();
+
+
+
+
+            var date2 = event.substring(0, event.length - 4);
+
+            var date3 = date2 + " +0200";
+
+
+
+
+            //id = id + i;
+            let item = file.files[i];
+
+            let archivename = item.name.replace(/ /g, "%20");
+            console.log(item);
+
+            //let filetype = item.name.substring(item.name.length-4,item.name.length);
+
+
+            let rssOfitem = (`<item><title>${item.name.substring(0, item.name.length - 4)}</title><description>${description}</description><itunes:summary>${description}</itunes:summary><itunes:subtitle>${description}</itunes:subtitle><enclosure url="${storepath}${showname}/${archivename}" type="audio/mpeg" length="1" /><guid>${storepath}${showname}/${archivename}</guid><pubDate>${date3}</pubDate></item>`);
+
+            finishedFiles.push(rssOfitem);
+
+            a.setAttribute("href", rsslink);
+            b.setAttribute("href", archivelink);
+
+            document.getElementById("textareaRSS").innerHTML = finishedFiles.toString().replace(/,<item>/g, "<item>");
+
+            document.getElementById("textareaHTML").innerHTML = `<a href="${archivename}">${item.name.toString()}</a> <br> <br>`;
+
+            document.getElementById("textareaYT").innerHTML = `Apu azért iszik, mert te sírsz! Puzsér Róbert és Farkas Attila Márton beszélgetése a Mika Tivadar Mulatóban.
+
+                    Spotify "APU": https://open.spotify.com/show/3Pv0slVPbeKGjssFDGaPhr
+                    iTunes "APU": https://itunes.apple.com/hu/podcast/puzs%C3%A9r-podcast-apu-az%C3%A9rt-iszik-mert-te-s%C3%ADrsz/id1457463995?mt=2
+                    SoundCloud "APU": https://soundcloud.com/puzserrobert-862593617/sets/apu-azert-iszik-mert-te-sirsz
+                    Youtube "APU": https://www.youtube.com/playlist?list=PL_m5i4Bl8okmioycXqux5BuIhffO9yLo3
+                    Facebook "APU": https://www.facebook.com/apuisziktesirsz/ `;
+
+        }
+
+
+
+
+
+
+        // document.querySelector('form').addEventListener('submit', (event) => {
+        //        event.preventDefault();
+        //        const { path } = document.querySelector('#file').files[0];
+        //        const { value } = document.querySelector('#splittime');
+
+
+        //        
+
+
+        //    });
+
+
+
+    }
+
+
+    var radios = document.forms["formA"].elements["showName"];
+
+    for (var i = 0, max = radios.length; i < max; i++) {
+        radios[i].onclick = function() {
+
+            // let formAa = document.querySelector("formA");
+            // formAa.style.display = "none";
+
+            chooseShow(this.value);
+
+        }
+    }
+
+    let chooseShow = (show) => {
+
+        description = document.getElementById("description").value;
+
+
+        var a = document.getElementById('link1');
+        var b = document.getElementById('link2');
+
+
+        showname = document.querySelector('input[name="showName"]:checked').value;
+
+        storepath = "https://archive.org/download/";
+
+
+        // let datum = (`${year}.${document.getElementById("datum").value.substring(0,2)}.${document.getElementById("datum").value.substring(2,4)}.`);
+        //let title = document.getElementById("title").value;
+        // let description = (document.getElementById("description").value.length == 0) ? "Puzsér Róbert" : document.getElementById("description").value;
+
+        switch (show) {
+
+
+            case "ApuAzrtIszikMertTeSrsz":
+
+
+                rsslink = "http://texteditor.nsspot.net/?state=%7B%22ids%22:%5B%221glkETO0u8a9ArEtY813r4DY7NpVD_mwd%22%5D,%22action%22:%22open%22,%22userId%22:%22103140051846511381616%22%7D";
+                archivelink = "https://archive.org/edit.php?edit-files=1&identifier=ApuAzrtIszikMertTeSrsz";
+
+                description = (description.length == 0) ? "Puzsér Róbert és Farkas Attila Márton beszélgetése a Mika Tivadar Mulatóban." : description;
+
+
+
+
+
+                break;
+
+            case "puzser_youtube_podcast":
+
+
+
+                rsslink = "http://texteditor.nsspot.net/?state=%7B%22ids%22:%5B%22186hRc9sM3Q8emz7qkrUks4dAo24j8E7j%22%5D,%22action%22:%22open%22,%22userId%22:%22103140051846511381616%22%7D";
+                archivelink = "https://archive.org/edit.php?edit-files=1&identifier=puzser_youtube_podcast";
+                description = (description.length == 0) ? "Puzsér Róbert" : `Puzsér Róbert${description}`;
+
+
+                break;
+            case "NknyesMrvad2015-2019":
+
+
+
+                rsslink = "http://texteditor.nsspot.net/?state=%7B%22ids%22:%5B%221c9JeyhDf7WubChjRop6nJHldTi3fakE7%22%5D,%22action%22:%22open%22,%22userId%22:%22103140051846511381616%22%7D";
+                archivelink = "https://archive.org/edit.php?edit-files=1&identifier=NknyesMrvad2015-2019";
+
+                description = (description.length == 0) ? "Puzsér Róbert, Horváth Oszkár" : `Puzsér Róbert, Horváth Oszkár${description}`;
+
+
+                break;
+            case "HARDTALKPuzsrRberttel":
+
+
+
+                rsslink = "http://texteditor.nsspot.net/?state=%7B%22ids%22:%5B%221vBqPhTxPrSZjIc0q1jGi0KjRbHH2Umn3%22%5D,%22action%22:%22open%22,%22userId%22:%22103140051846511381616%22%7D";
+
+
+                archivelink = "https://archive.org/edit.php?edit-files=1&identifier=HARDTALKPuzsrRberttel";
+
+                description = `Puzsér Róbert vitapartnere: ${description}`;
+
+
+
+
+                break;
+
+            case "joarosszesanezhetetlen":
+
+
+
+                rsslink = "http://texteditor.nsspot.net/?state=%7B%22ids%22:%5B%221UjA1uGPStI12hphsLkgZ39UxVTNitcSv%22%5D,%22action%22:%22open%22,%22userId%22:%22103140051846511381616%22%7D";
+                archivelink = "https://archive.org/edit.php?edit-files=1&identifier=joarosszesanezhetetlen";
+
+                description = (description.length == 0) ? "Puzsér Róbert, Horváth Oszkár" : `Puzsér Róbert, Horváth Oszkár${description}`;
+
+
+                break;
+
+            case "sample%20webpage":
+
+
+
+                rsslink = "http://texteditor.nsspot.net/?state=%7B%22ids%22:%5B%221glkETO0u8a9ArEtY813r4DY7NpVD_mwd%22%5D,%22action%22:%22open%22,%22userId%22:%22103140051846511381616%22%7D";
+                archivelink = "https://archive.org/edit.php?edit-files=1&identifier=ApuAzrtIszikMertTeSrsz";
+
+                description = (description.length == 0) ? "Puzsér Róbert és Farkas Attila Márton beszélgetése a Mika Tivadar Mulatóban." : description;
+
+
+                storepath = "https://2uomw09g7yhwzrkf5plxla-on.drv.tw/";
+
+
+                break;
+
+
+
+
+        }
+
+        // var x = document.getElementById("inputfields");
+        // x.style.display = "block";
+
+
+    }
+
+
+    //enter is kiváltja a kattintást
+
+    // var input = document.getElementById("splittime");
+    // input.addEventListener("keyup", function(event) {
+    //     if (event.keyCode === 13) {
+    //         event.preventDefault();
+    //         document.getElementById("btn").click();
+    //     }
+    // });
+
+
+
+
+    let copy0 = () => {
+        var copyText = document.getElementById("textareaRSS");
+        copyText.select();
+        document.execCommand("copy");
+
+    }
+    let copy1 = () => {
+        var copyText = document.getElementById("textareaHTML");
+        copyText.select();
+        document.execCommand("copy");
+
+    }
+    let copy2 = () => {
+        var copyText = document.getElementById("textareaYT");
+        copyText.select();
+        document.execCommand("copy");
+
+    }
+    </script>
+    <script async src="https://drv.tw/inc/wd.js"></script>
+</body>
+
+</html>
