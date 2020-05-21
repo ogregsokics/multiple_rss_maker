@@ -122,7 +122,7 @@
 
 
 
-            var event = new Date(d - (i * 1000*60*60)).toUTCString();
+            var event = new Date(d - (i * 1000 * 60 * 60)).toUTCString();
 
 
 
@@ -137,13 +137,25 @@
             //id = id + i;
             let item = file.files[i];
 
-            let archivename = item.name.replace(/ /g, "%20");
+            let archivename = encodeURIComponent(item.name);
+
+            //  let archivename = item.name.replace(/ /g, "%20").replace(/#/g, "%23");
+
+            let title = item.name.substring(0, item.name.length - 4)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&apos;');
+
+
+
             console.log(item);
 
             //let filetype = item.name.substring(item.name.length-4,item.name.length);
 
 
-            let rssOfitem = (`<item><title>${item.name.substring(0, item.name.length - 4)}</title><description>${description}</description><itunes:summary>${description}</itunes:summary><itunes:subtitle>${description}</itunes:subtitle><enclosure url="${storepath}${showname}/${archivename}" type="audio/mpeg" length="1" /><guid>${storepath}${showname}/${archivename}</guid><pubDate>${date3}</pubDate></item>`);
+            let rssOfitem = (`<item><title>${title}</title><description>${description}</description><itunes:summary>${description}</itunes:summary><itunes:subtitle>${description}</itunes:subtitle><enclosure url="${storepath}${showname}/${archivename}" type="audio/mpeg" length="1" /><guid>${storepath}${showname}/${archivename}</guid><pubDate>${date3}</pubDate></item>`);
 
             finishedFiles.push(rssOfitem);
 
