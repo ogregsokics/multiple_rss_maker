@@ -101,7 +101,7 @@
 
     var d = new Date().getTime();
 
-
+let finishedFiles = [];
 
     uploadFiles = () => {
 
@@ -115,7 +115,7 @@
         //console.log(file.files);
         let uploadedfiles = [file.files];
 
-        let finishedFiles = [];
+        finishedFiles = [];
         let szam = 0;
 
         for (var i = 0; i < file.files.length; i++) {
@@ -148,25 +148,29 @@
                 .replace(/"/g, '&quot;')
                 .replace(/'/g, '&apos;');
 
+                console.log(title);
 
 
-            console.log(item);
+
+           // console.log(item);
 
             //let filetype = item.name.substring(item.name.length-4,item.name.length);
 
 
             let rssOfitem = (`<item><title>${title}</title><description>${description}</description><itunes:summary>${description}</itunes:summary><itunes:subtitle>${description}</itunes:subtitle><enclosure url="${storepath}${showname}/${archivename}" type="audio/mpeg" length="1" /><guid>${storepath}${showname}/${archivename}</guid><pubDate>${date3}</pubDate></item>`);
 
+            
+
             finishedFiles.push(rssOfitem);
 
             a.setAttribute("href", rsslink);
             b.setAttribute("href", archivelink);
 
-            document.getElementById("textareaRSS").innerHTML = finishedFiles.toString().replace(/,<item>/g, "<item>");
+            document.getElementById("textareaRSS").value = finishedFiles.toString().replace(/,<item>/g, "<item>");
 
-            document.getElementById("textareaHTML").innerHTML = `<a href="${archivename}">${item.name.toString()}</a> <br> <br>`;
+            document.getElementById("textareaHTML").value = `<a href="${archivename}">${item.name.toString()}</a> <br> <br>`;
 
-            document.getElementById("textareaYT").innerHTML = `Apu azért iszik, mert te sírsz! Puzsér Róbert és Farkas Attila Márton beszélgetése a Mika Tivadar Mulatóban.
+            document.getElementById("textareaYT").value = `Apu azért iszik, mert te sírsz! Puzsér Róbert és Farkas Attila Márton beszélgetése a Mika Tivadar Mulatóban.
 
                     Spotify "APU": https://open.spotify.com/show/3Pv0slVPbeKGjssFDGaPhr
                     iTunes "APU": https://itunes.apple.com/hu/podcast/puzs%C3%A9r-podcast-apu-az%C3%A9rt-iszik-mert-te-s%C3%ADrsz/id1457463995?mt=2
@@ -335,6 +339,9 @@
 
 
     let copy0 = () => {
+
+       
+
         var copyText = document.getElementById("textareaRSS");
         copyText.select();
         document.execCommand("copy");
