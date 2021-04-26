@@ -30,7 +30,7 @@
     <h1 class="center">multiplefilesRSS</h1>
     <div class="row">
         <div class="col-md-3">
-            <label>HardTalk esetén ki volt a vitapartner VAGY vessző, majd ki vett még rész a beszélgetésben ( pl: , Ellenpont András)</label>
+            <label>ki vett még részt a beszélgetésben ( pl:Ellenpont András)</label>
             <br>
             <br>
             <input type="text" class="form-control" id="description" value=""><br>
@@ -41,12 +41,13 @@
             <input type="text" class="form-control" id="datum" value=""><br> -->
             <br>
             <form name="formA">
-                <label><input type="radio" name="showName" value="ApuAzrtIszikMertTeSrsz"> APU</label> <br>
                 <label><input type="radio" name="showName" value="puzser_youtube_podcast">puzser_youtube_podcast</label><br>
-                <label><input type="radio" name="showName" value="NknyesMrvad2015-2019"> ÖNKÉNYES MÉRVADÓ </label><br>
-                <label><input type="radio" name="showName" value="HARDTALKPuzsrRberttel"> HARD TALK </label><br>
-                <label><input type="radio" name="showName" value="joarosszesanezhetetlen"> A jó, a rossz és a nézhetetlen </label><br>
-                <label><input type="radio" name="showName" value="sample%20webpage"> GOOGLE DRIVE (APU) </label><br>
+                <label><input type="radio" name="showName" value="apu"> APU</label> <br>
+                <label><input type="radio" name="showName" value="onkenyes"> ÖNKÉNYES </label><br>
+                <label><input type="radio" name="showName" value="HARDTALK"> HARD TALK </label><br>
+                <label><input type="radio" name="showName" value="ot"> ÖT </label><br>
+                <label><input type="radio" name="showName" value="sznob_atv">sznob_atv </label><br>
+                <label><input type="radio" name="showName" value="emda">éhesmakkal </label><br>
             </form>
         </div>
         <div class="col-md-6">
@@ -59,38 +60,205 @@
             </div>
             <br>
             <br>
-            <textarea rows="4" cols="50" id="textareaRSS">textareaRSS</textarea>
+            <textarea rows="20" cols="100" id="textareaRSS">textareaRSS</textarea>
             <button onclick="copy0()">Copy textareaRSS</button>
-            <textarea rows="4" cols="50" id="textareaHTML">textareaHTML</textarea>
+            <!--     <textarea rows="4" cols="50" id="textareaHTML">textareaHTML</textarea>
             <button onclick="copy1()">Copy textareaHTML</button>
             <textarea rows="4" cols="50" id="textareaYT">textareaYT</textarea>
-            <button onclick="copy2()">Copy textareaYT</button>
+            <button onclick="copy2()">Copy textareaYT</button> -->
         </div>
         <div class="col-md-3">
-            <a id="link1" target="_blank">RSS</a><br><br>
+            <!-- <a id="link1" target="_blank">RSS</a><br><br> -->
             <a id="link2" target="_blank">archive.org</a><br><br>
-            <a target="_blank" href="https://soundcloud.com/you/tracks">SoundCloud</a><br><br>
+            <!--  <a target="_blank" href="https://soundcloud.com/you/tracks">SoundCloud</a><br><br>
             <a target="_blank" href="https://www.youtube.com/upload">youtube upload</a><br><br>
             <a target="_blank" href="http://texteditor.nsspot.net/?state=%7B%22ids%22:%5B%221Fwup2j8at0Rw4h_uNsLthGG8Ns8gyuTg%22%5D,%22action%22:%22open%22,%22userId%22:%22103140051846511381616%22%7D">HTML DRIVE</a><br><br>
-            <a target="_blank" href="https://drive.google.com/drive/u/3/folders/1_T8eOktwjW53_yESnc9JCu8t7fBePo7K">GOOGLE DRIVE</a><br><br>
+            <a target="_blank" href="https://drive.google.com/drive/u/3/folders/1_T8eOktwjW53_yESnc9JCu8t7fBePo7K">GOOGLE DRIVE</a><br><br> -->
         </div>
     </div>
     <script>
-    //  var id = new Date().getTime();
-
-    let rsslink;
-    let archivelink;
+    //  let rsslink;
+    let archivelink = "https://archive.org/edit.php?edit-files=1&identifier=puzser_youtube_podcast";
     let showname;
     let description;
+    let image;
 
-    let storepath;
+    let storepath = "https://archive.org/download/puzser_youtube_podcast";
+
+
+
+    var radios = document.forms["formA"].elements["showName"];
+
+    for (var i = 0, max = radios.length; i < max; i++) {
+        radios[i].onclick = function() {
+
+            // let formAa = document.querySelector("formA");
+            // formAa.style.display = "none";
+
+            chooseShow(this.value);
+
+        }
+    }
+
+    let chooseShow = (show) => {
+
+        description = document.getElementById("description").value;
+
+
+        // var a = document.getElementById('link1');
+        var b = document.getElementById('link2');
+
+
+        showname = document.querySelector('input[name="showName"]:checked').value;
+
+
+
+
+        // let datum = (`${year}.${document.getElementById("datum").value.substring(0,2)}.${document.getElementById("datum").value.substring(2,4)}.`);
+        //let title = document.getElementById("title").value;
+        // let description = (document.getElementById("description").value.length == 0) ? "Puzsér Róbert" : document.getElementById("description").value;
+
+        switch (show) {
+
+
+            case "apu":
+
+
+                //rsslink = "https://github.com/ogregsokics/podcast-rss-feed/blob/master/ApuAzrtIszikMertTeSirsz.xml";
+                //   archivelink = "https://archive.org/edit.php?edit-files=1&identifier=ApuAzrtIszikMertTeSrsz";
+
+                description = (description.length == 0) ? "Puzsér Róbert és Farkas Attila Márton beszélgetése a Mika Tivadar Mulatóban." : `Puzsér Róbert, Farkas Attila Márton és ${description} beszélgetése a Mika Tivadar Mulatóban.`;
+
+                image = "https://i.ibb.co/Rbsq8P8/apu-1.jpg";
+
+
+
+
+
+                break;
+
+            case "puzser_youtube_podcast":
+
+
+
+                // rsslink = "https://github.com/ogregsokics/podcast-rss-feed/blob/master/puzser_youtube_podcast.xml";
+                // archivelink = "https://archive.org/edit.php?edit-files=1&identifier=puzser_youtube_podcast";
+                description = (description.length == 0) ? "Puzsér Róbert" : `Puzsér Róbert, ${description}`;
+                image = "https://i.ibb.co/dDQxDqL/puzser3000x3000.jpg";
+
+
+                break;
+            case "onkenyes":
+
+
+
+                // rsslink = "https://github.com/ogregsokics/podcast-rss-feed/blob/master/OnkenyesMervado.xml";
+                // archivelink = "https://archive.org/edit.php?edit-files=1&identifier=NknyesMrvad2015-2019";
+
+                description = (description.length == 0) ? "Puzsér Róbert, Horváth Oszkár" : `Puzsér Róbert, Horváth Oszkár, ${description}`;
+                image = "https://i.ibb.co/MR3t4kX/onkenyes-pod-spirit.jpg";
+
+
+
+
+                break;
+            case "HARDTALK":
+
+
+
+                // rsslink = "https://github.com/ogregsokics/podcast-rss-feed/blob/master/HardTalk.xml";
+
+
+                // archivelink = "https://archive.org/edit.php?edit-files=1&identifier=HARDTALKPuzsrRberttel";
+
+                description = `Puzsér Róbert vitapartnere: ${description}`;
+
+                image = "https://i.ibb.co/47m46m1/3000-3000-1.jpg";
+
+
+
+
+                break;
+
+            case "ot":
+
+
+
+                // rsslink = "https://github.com/ogregsokics/podcast-rss-feed/blob/master/JRN.xml";
+                // archivelink = "https://archive.org/edit.php?edit-files=1&identifier=joarosszesanezhetetlen";
+
+                description = (description.length == 0) ? "Puzsér Róbert" : `Puzsér Róbert, ${description}`;
+
+                image = "https://i.ibb.co/M9Bnt3L/ot-pod.jpg";
+
+
+                break;
+
+            case "sznob_atv":
+
+
+
+
+
+                description = (description.length == 0) ? "Puzsér Róbert" : `Puzsér Róbert, ${description}`;
+                image = "https://i.ibb.co/0t4DVpG/sznob-1.jpg";
+
+
+                //  storepath = "https://2uomw09g7yhwzrkf5plxla-on.drv.tw/";
+
+
+                break;
+
+            case "emda":
+
+
+
+
+
+                description = (description.length == 0) ? "Puzsér Róbert" : `Puzsér Róbert, ${description}`;
+
+                image = "https://i.ibb.co/WBmfyzP/emda-1.jpg";
+
+
+                //  storepath = "https://2uomw09g7yhwzrkf5plxla-on.drv.tw/";
+
+
+                break;
+
+
+
+
+        }
+
+        // var x = document.getElementById("inputfields");
+        // x.style.display = "block";
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //  var id = new Date().getTime();
+
 
     //let year = new Date().getFullYear();
 
 
 
 
-    var a = document.getElementById('link1');
+    // var a = document.getElementById('link1');
     var b = document.getElementById('link2');
 
     /* var event = new Date().toUTCString();
@@ -101,7 +269,7 @@
 
     var d = new Date().getTime();
 
-let finishedFiles = [];
+    let finishedFiles = [];
 
     uploadFiles = () => {
 
@@ -148,35 +316,35 @@ let finishedFiles = [];
                 .replace(/"/g, '&quot;')
                 .replace(/'/g, '&apos;');
 
-                console.log(title);
+            console.log(title);
 
 
 
-           // console.log(item);
+            // console.log(item);
 
             //let filetype = item.name.substring(item.name.length-4,item.name.length);
 
 
-            let rssOfitem = (`<item><title>${title}</title><description>${description}</description><itunes:summary>${description}</itunes:summary><itunes:subtitle>${description}</itunes:subtitle><enclosure url="${storepath}${showname}/${archivename}" type="audio/mpeg" length="1" /><guid>${storepath}${showname}/${archivename}</guid><pubDate>${date3}</pubDate></item>`);
+            let rssOfitem = (`<item><title>${title}</title><description>${description}</description><itunes:summary>${description}</itunes:summary><itunes:subtitle>${description}</itunes:subtitle><enclosure url="${storepath}/${archivename}" type="audio/mpeg" length="1" /><guid>${storepath}/${archivename}</guid><pubDate>${date3}</pubDate><itunes:image href="${image}"/></item>`);
 
-            
+
 
             finishedFiles.push(rssOfitem);
 
-            a.setAttribute("href", rsslink);
+            // a.setAttribute("href", rsslink);
             b.setAttribute("href", archivelink);
 
             document.getElementById("textareaRSS").value = finishedFiles.toString().replace(/,<item>/g, "<item>");
 
-            document.getElementById("textareaHTML").value = `<a href="${archivename}">${item.name.toString()}</a> <br> <br>`;
+            // document.getElementById("textareaHTML").value = `<a href="${archivename}">${item.name.toString()}</a> <br> <br>`;
 
-            document.getElementById("textareaYT").value = `Apu azért iszik, mert te sírsz! Puzsér Róbert és Farkas Attila Márton beszélgetése a Mika Tivadar Mulatóban.
+            // document.getElementById("textareaYT").value = `Apu azért iszik, mert te sírsz! Puzsér Róbert és Farkas Attila Márton beszélgetése a Mika Tivadar Mulatóban.
 
-                    Spotify "APU": https://open.spotify.com/show/3Pv0slVPbeKGjssFDGaPhr
-                    iTunes "APU": https://itunes.apple.com/hu/podcast/puzs%C3%A9r-podcast-apu-az%C3%A9rt-iszik-mert-te-s%C3%ADrsz/id1457463995?mt=2
-                    SoundCloud "APU": https://soundcloud.com/puzserrobert-862593617/sets/apu-azert-iszik-mert-te-sirsz
-                    Youtube "APU": https://www.youtube.com/playlist?list=PL_m5i4Bl8okmioycXqux5BuIhffO9yLo3
-                    Facebook "APU": https://www.facebook.com/apuisziktesirsz/ `;
+            //         Spotify "APU": https://open.spotify.com/show/3Pv0slVPbeKGjssFDGaPhr
+            //         iTunes "APU": https://itunes.apple.com/hu/podcast/puzs%C3%A9r-podcast-apu-az%C3%A9rt-iszik-mert-te-s%C3%ADrsz/id1457463995?mt=2
+            //         SoundCloud "APU": https://soundcloud.com/puzserrobert-862593617/sets/apu-azert-iszik-mert-te-sirsz
+            //         Youtube "APU": https://www.youtube.com/playlist?list=PL_m5i4Bl8okmioycXqux5BuIhffO9yLo3
+            //         Facebook "APU": https://www.facebook.com/apuisziktesirsz/ `;
 
         }
 
@@ -201,128 +369,7 @@ let finishedFiles = [];
     }
 
 
-    var radios = document.forms["formA"].elements["showName"];
 
-    for (var i = 0, max = radios.length; i < max; i++) {
-        radios[i].onclick = function() {
-
-            // let formAa = document.querySelector("formA");
-            // formAa.style.display = "none";
-
-            chooseShow(this.value);
-
-        }
-    }
-
-    let chooseShow = (show) => {
-
-        description = document.getElementById("description").value;
-
-
-        var a = document.getElementById('link1');
-        var b = document.getElementById('link2');
-
-
-        showname = document.querySelector('input[name="showName"]:checked').value;
-
-        storepath = "https://archive.org/download/";
-
-
-        // let datum = (`${year}.${document.getElementById("datum").value.substring(0,2)}.${document.getElementById("datum").value.substring(2,4)}.`);
-        //let title = document.getElementById("title").value;
-        // let description = (document.getElementById("description").value.length == 0) ? "Puzsér Róbert" : document.getElementById("description").value;
-
-        switch (show) {
-
-
-            case "ApuAzrtIszikMertTeSrsz":
-
-
-                rsslink = "https://github.com/ogregsokics/podcast-rss-feed/blob/master/ApuAzrtIszikMertTeSirsz.xml";
-                archivelink = "https://archive.org/edit.php?edit-files=1&identifier=ApuAzrtIszikMertTeSrsz";
-
-                description = (description.length == 0) ? "Puzsér Róbert és Farkas Attila Márton beszélgetése a Mika Tivadar Mulatóban." : description;
-
-
-
-
-
-                break;
-
-            case "puzser_youtube_podcast":
-
-
-
-                rsslink = "https://github.com/ogregsokics/podcast-rss-feed/blob/master/puzser_youtube_podcast.xml";
-                archivelink = "https://archive.org/edit.php?edit-files=1&identifier=puzser_youtube_podcast";
-                description = (description.length == 0) ? "Puzsér Róbert" : `Puzsér Róbert${description}`;
-
-
-                break;
-            case "NknyesMrvad2015-2019":
-
-
-
-                rsslink = "https://github.com/ogregsokics/podcast-rss-feed/blob/master/OnkenyesMervado.xml";
-                archivelink = "https://archive.org/edit.php?edit-files=1&identifier=NknyesMrvad2015-2019";
-
-                description = (description.length == 0) ? "Puzsér Róbert, Horváth Oszkár" : `Puzsér Róbert, Horváth Oszkár${description}`;
-
-
-                break;
-            case "HARDTALKPuzsrRberttel":
-
-
-
-                rsslink = "https://github.com/ogregsokics/podcast-rss-feed/blob/master/HardTalk.xml";
-
-
-                archivelink = "https://archive.org/edit.php?edit-files=1&identifier=HARDTALKPuzsrRberttel";
-
-                description = `Puzsér Róbert vitapartnere: ${description}`;
-
-
-
-
-                break;
-
-            case "joarosszesanezhetetlen":
-
-
-
-                rsslink = "https://github.com/ogregsokics/podcast-rss-feed/blob/master/JRN.xml";
-                archivelink = "https://archive.org/edit.php?edit-files=1&identifier=joarosszesanezhetetlen";
-
-                description = (description.length == 0) ? "Puzsér Róbert, Horváth Oszkár" : `Puzsér Róbert, Horváth Oszkár${description}`;
-
-
-                break;
-
-            case "sample%20webpage":
-
-
-
-                rsslink = "http://texteditor.nsspot.net/?state=%7B%22ids%22:%5B%221glkETO0u8a9ArEtY813r4DY7NpVD_mwd%22%5D,%22action%22:%22open%22,%22userId%22:%22103140051846511381616%22%7D";
-                archivelink = "https://archive.org/edit.php?edit-files=1&identifier=ApuAzrtIszikMertTeSrsz";
-
-                description = (description.length == 0) ? "Puzsér Róbert és Farkas Attila Márton beszélgetése a Mika Tivadar Mulatóban." : description;
-
-
-                storepath = "https://2uomw09g7yhwzrkf5plxla-on.drv.tw/";
-
-
-                break;
-
-
-
-
-        }
-
-        // var x = document.getElementById("inputfields");
-        // x.style.display = "block";
-
-
-    }
 
 
     //enter is kiváltja a kattintást
@@ -340,25 +387,25 @@ let finishedFiles = [];
 
     let copy0 = () => {
 
-       
+
 
         var copyText = document.getElementById("textareaRSS");
         copyText.select();
         document.execCommand("copy");
 
     }
-    let copy1 = () => {
-        var copyText = document.getElementById("textareaHTML");
-        copyText.select();
-        document.execCommand("copy");
+    // let copy1 = () => {
+    //     var copyText = document.getElementById("textareaHTML");
+    //     copyText.select();
+    //     document.execCommand("copy");
 
-    }
-    let copy2 = () => {
-        var copyText = document.getElementById("textareaYT");
-        copyText.select();
-        document.execCommand("copy");
+    // }
+    // let copy2 = () => {
+    //     var copyText = document.getElementById("textareaYT");
+    //     copyText.select();
+    //     document.execCommand("copy");
 
-    }
+    // }
     </script>
     <script async src="https://drv.tw/inc/wd.js"></script>
 </body>
