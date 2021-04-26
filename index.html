@@ -30,11 +30,23 @@
     <h1 class="center">multiplefilesRSS</h1>
     <div class="row">
         <div class="col-md-3">
-            <label>ki vett még részt a beszélgetésben ( pl:Ellenpont András)</label>
-            <br>
-            <br>
-            <input type="text" class="form-control" id="description" value=""><br>
-            <br>
+            <label>ki vett még részt a beszélgetésben:</label>
+            <input type="text" name="description" list="guests" id="description">
+            <datalist id="guests">
+                <option value="Gödri Bulcsu">
+                <option value="Csizi Ágnes">
+                <option value="Nyári Gábor">
+                <option value="Kovács 4 Zoli">
+                <option value="Tasnádi András">
+                <option value="Szabó Eszter">
+                <option value="Murányi Pál">
+                <option value="D. Horváth Gábor">
+                <option value="Nagy Gergely">
+                <option value="Farkas Attila Márton">
+                <option value="Lampé Ágnes, Konok Péter, Ceglédi Zoltán, Vona Gábor">
+            </datalist>
+            <!--             <input type="text" class="form-control" id="description" value=""><br>
+ --> <br>
             <!-- <label>dátum( pl: hhnn)</label>
             <br>
             <br>
@@ -60,9 +72,8 @@
             </div>
             <br>
             <br>
-             <button onclick="copy0()">Copy textareaRSS</button>
+            <button onclick="copy0()">Copy textareaRSS</button>
             <textarea rows="20" cols="100" id="textareaRSS">textareaRSS</textarea>
-           
             <!--     <textarea rows="4" cols="50" id="textareaHTML">textareaHTML</textarea>
             <button onclick="copy1()">Copy textareaHTML</button>
             <textarea rows="4" cols="50" id="textareaYT">textareaYT</textarea>
